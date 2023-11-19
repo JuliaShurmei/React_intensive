@@ -1,11 +1,11 @@
-.login-wrapper {
+.wrapper {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   padding: 10px;
 
-  .login-container {
+  .container {
     width: 70%;
     background: #fff;
     border-radius: 10px;
@@ -14,7 +14,7 @@
     align-items: center;
     padding-top: 150px;
 
-    .login-image {
+    .loginImage {
       width: 316px;
       transition: transform 0.3s ease;
       margin-right: 60px;
@@ -27,11 +27,11 @@
       }
     }
 
-    .login-form {
+    .loginForm {
       width: 290px;
     }
 
-    .login-title {
+    .loginTitle {
       font-size: 34px;
       font-weight: 700;
       color: #45a049;
@@ -42,14 +42,14 @@
       padding-bottom: 30px;
     }
 
-    .form-group {
+    .formGroup {
       position: relative;
       width: 100%;
       z-index: 1;
       margin-bottom: 30px;
     }
 
-    .input-form {
+    .inputForm {
       font-family: Poppins-Medium;
       font-size: 20px;
       line-height: 2;
@@ -63,8 +63,19 @@
       outline: none;
       border: none;
 
-      &.input-form-error {
-        border: solid red 1px;
+      &_error {
+        font-family: Poppins-Medium;
+        font-size: 20px;
+        line-height: 2;
+        color: #666;
+        display: block;
+        width: 100%;
+        background: #e6e6e6;
+        height: 50px;
+        border: none;
+        border-radius: 25px;
+        padding: 0 30px 0 68px;
+        outline: solid red 1px;
       }
 
       &:focus {
@@ -77,8 +88,7 @@
       margin-bottom: 5px;
     }
 
-    .symbol-input100,
-    .focus-input100 {
+    .symbolInput{
       position: absolute;
       left: 20px;
       top: 25%;
@@ -86,7 +96,7 @@
       color: #45a049;
     }
 
-    .btn {
+    .symbol {
       position: absolute;
       left: 335px;
       top: 25%;
@@ -96,7 +106,7 @@
       border: none;
     }
 
-    .btn-submit {
+    .btnSubmit {
       margin-top: 20px;
       font-size: 15px;
       line-height: 1.5;
@@ -114,7 +124,7 @@
       }
     }
 
-    .error-message {
+    .errorMessage {
       position: absolute;
       bottom: -20px;
       left: 70px;
@@ -126,17 +136,17 @@
 }
 
 @media (max-width: 400px) {
-  .login-wrapper {
-    .login-container {
+  .wrapper {
+    .container {
       width: 90%;
 
-      .login-image {
+      .loginImage {
         width: 100%;
         margin-right: 0;
         margin-bottom: 20px;
       }
 
-      .login-form {
+      .loginForm {
         width: 100%;
       }
     }
