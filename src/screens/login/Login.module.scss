@@ -1,0 +1,154 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+
+  .container {
+    width: 70%;
+    background: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: 150px;
+
+    .loginImage {
+      width: 316px;
+      transition: transform 0.3s ease;
+      margin-right: 60px;
+
+      &:hover {
+        transform: rotate(360deg);
+      }
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .loginForm {
+      width: 290px;
+    }
+
+    .loginTitle {
+      font-size: 34px;
+      font-weight: 700;
+      color: #45a049;
+      line-height: 1.2;
+      text-align: center;
+      width: 100%;
+      display: block;
+      padding-bottom: 30px;
+    }
+
+    .formGroup {
+      position: relative;
+      width: 100%;
+      z-index: 1;
+      margin-bottom: 30px;
+    }
+
+    .inputForm {
+      font-family: Poppins-Medium;
+      font-size: 20px;
+      line-height: 2;
+      color: #666;
+      display: block;
+      width: 100%;
+      background: #e6e6e6;
+      height: 50px;
+      border-radius: 25px;
+      padding: 0 30px 0 68px;
+      outline: none;
+      border: none;
+
+      &_error {
+        font-family: Poppins-Medium;
+        font-size: 20px;
+        line-height: 2;
+        color: #666;
+        display: block;
+        width: 100%;
+        background: #e6e6e6;
+        height: 50px;
+        border: none;
+        border-radius: 25px;
+        padding: 0 30px 0 68px;
+        outline: solid red 1px;
+      }
+
+      &:focus {
+        outline: 2px solid #45a049;
+      }
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .symbolInput{
+      position: absolute;
+      left: 20px;
+      top: 25%;
+      font-size: 25px;
+      color: #45a049;
+    }
+
+    .symbol {
+      position: absolute;
+      left: 335px;
+      top: 25%;
+      font-size: 25px;
+      background-color: #e6e6e6;
+      color: #45a049;
+      border: none;
+    }
+
+    .btnSubmit {
+      margin-top: 20px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #fff;
+      text-transform: uppercase;
+      width: 133%;
+      height: 50px;
+      border-radius: 25px;
+      background: #57b846;
+      border: none;
+
+      &:hover {
+        background: #333;
+        cursor: pointer;
+      }
+    }
+
+    .errorMessage {
+      position: absolute;
+      bottom: -20px;
+      left: 70px;
+      color: red;
+      font-size: 15px;
+      z-index: 2;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .wrapper {
+    .container {
+      width: 90%;
+
+      .loginImage {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+
+      .loginForm {
+        width: 100%;
+      }
+    }
+  }
+}
