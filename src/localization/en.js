@@ -1,0 +1,17 @@
+export const en = {
+  title: 'Title',
+  description: 'Description',
+  tags: 'Tags',
+  type: 'Type',
+  delete: 'Delete',
+  edit: 'Edit',
+  readMore: 'Read more',
+  add: 'Add',
+  color: 'Color',
+  cancel: 'Cancel',
+  confirm: 'Confirm',
+  public: 'Public',
+  owner: 'Owner',
+  deleteConfirmation: 'Are you sure to delete this note?',
+  addToFavorites: 'Add to Favorites',
+}
