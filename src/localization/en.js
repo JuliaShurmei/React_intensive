@@ -12,6 +12,7 @@ export const en = {
   confirm: 'Confirm',
   public: 'Public',
   owner: 'Owner',
+  login: 'Login',
   deleteConfirmation: 'Are you sure to delete this note?',
   addToFavorites: 'Add to Favorites',
 }

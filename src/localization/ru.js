@@ -12,6 +12,7 @@ export const ru = {
   confirm: 'Подтвердить',
   add: 'Добавить',
   owner: 'Владелец',
+  login: 'Войти',
   deleteConfirmation: 'Вы уверены, что хотите удалить эту заметку?',
   addToFavorites: 'Добавить в избранное',
 }

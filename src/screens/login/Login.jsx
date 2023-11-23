@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import {Formik, Form} from 'formik'
+import {useLocalization} from './../../contexts/LocalizationContext'
 import {Input} from '../../components/input/Input'
 import {Error} from '../../components/error/Error'
 import {Button} from '../../components/button/Button'
@@ -11,6 +12,7 @@ import {RiLock2Line} from 'react-icons/ri'
 import styles from './Login.module.scss'
 
 export const Login = () => {
+  const {language} = useLocalization()
   const [type, setType] = useState(false)
   const toggleBtn = () => {
     setType(prevType => !prevType)
@@ -71,7 +73,7 @@ export const Login = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  value="Login"
+                  localizedValue={language.login}
                   className={styles.btnSubmit}
                 />
               </Form>
