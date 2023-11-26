@@ -1,0 +1,18 @@
+export const ru = {
+  title: 'Название',
+  description: 'Описание',
+  tags: 'Тэги',
+  type: 'Тип',
+  delete: 'Удалить',
+  edit: 'Редактировать',
+  readMore: 'Подробнее',
+  public: 'Публичный',
+  cancel: 'Назад',
+  color: 'Цвет',
+  confirm: 'Подтвердить',
+  add: 'Добавить',
+  owner: 'Владелец',
+  login: 'Войти',
+  deleteConfirmation: 'Вы уверены, что хотите удалить эту заметку?',
+  addToFavorites: 'Добавить в избранное',
+}
