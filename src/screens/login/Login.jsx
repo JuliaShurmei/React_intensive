@@ -70,7 +70,7 @@ export const Login = () => {
                   </span>
                   <Error name="password" component="div" className={styles.errorMessage} />
                 </div>
-                {!errors.email && !errors.password ? (
+                {!errors.email && touched.email && !errors.password && touched.password ? (
                   <Link to="/private-notes">
                     <Button
                       type="submit"

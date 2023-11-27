@@ -15,4 +15,9 @@ export const en = {
   login: 'Login',
   deleteConfirmation: 'Are you sure to delete this note?',
   addToFavorites: 'Add to Favorites',
+  currentPassword: 'Current password',
+  newPassword: 'New password',
+  confirmPassword: 'Confirm password',
+  changePassword: 'Change password',
+  successMessage: 'Password successfully changed',
 }

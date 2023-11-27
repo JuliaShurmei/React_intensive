@@ -15,4 +15,9 @@ export const ru = {
   login: 'Войти',
   deleteConfirmation: 'Вы уверены, что хотите удалить эту заметку?',
   addToFavorites: 'Добавить в избранное',
+  currentPassword: 'Текущий пароль',
+  newPassword: 'Новый пароль',
+  confirmPassword: 'Повторите пароль',
+  changePassword: 'Изменить пароль',
+  successMessage: 'Пароль успешно изменён',
 }

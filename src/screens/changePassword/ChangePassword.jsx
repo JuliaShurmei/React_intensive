@@ -1,20 +1,14 @@
-// ChangePassword.jsx
 import {useState} from 'react'
-import {Formik, Form, Field, ErrorMessage} from 'formik'
-import * as Yup from 'yup'
+import {Formik, Form} from 'formik'
+import {useLocalization} from './../../contexts/LocalizationContext'
+import {Button} from '../../components/button/Button'
+import {Input} from '../../components/input/Input'
+import {Error} from '../../components/error/Error'
+import {ChangePasswordSchema} from '../../validators/ChangePasswordSchema'
 import styles from './ChangePassword.module.scss'
 
-const ChangePasswordSchema = Yup.object().shape({
-  currentPassword: Yup.string().required('Current password is required'),
-  newPassword: Yup.string()
-    .required('New password is required')
-    .min(6, 'Password must be at least 6 characters long'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
-    .required('Confirm password is required'),
-})
-
 export const ChangePassword = () => {
+  const {language} = useLocalization()
   const [isSuccess, setIsSuccess] = useState(false)
 
   const handleSubmit = () => {
@@ -31,31 +25,63 @@ export const ChangePassword = () => {
         }}
         validationSchema={ChangePasswordSchema}
         onSubmit={handleSubmit}>
-        <Form>
-          {isSuccess && <div className={styles.successMessage}>Password successfully changed!</div>}
+        {({isSubmitting, errors, touched}) => (
+          <Form>
+            {isSuccess && <div className={styles.successMessage}>{language.successMessage}</div>}
 
-          <div className={styles.formGroup}>
-            <label htmlFor="currentPassword">Current Password</label>
-            <Field type="password" id="currentPassword" name="currentPassword" />
-            <ErrorMessage name="currentPassword" component="div" className={styles.error} />
-          </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="currentPassword">{language.currentPassword}:</label>
+              <Input
+                type="password"
+                id="currentPassword"
+                name="currentPassword"
+                className={
+                  errors.currentPassword && touched.currentPassword
+                    ? styles.inputForm_error
+                    : styles.inputForm
+                }
+              />
+              <Error name="currentPassword" component="div" className={styles.errorMessage} />
+            </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="newPassword">New Password</label>
-            <Field type="password" id="newPassword" name="newPassword" />
-            <ErrorMessage name="newPassword" component="div" className={styles.error} />
-          </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="newPassword">{language.newPassword}:</label>
+              <Input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                className={
+                  errors.newPassword && touched.newPassword
+                    ? styles.inputForm_error
+                    : styles.inputForm
+                }
+              />
+              <Error name="newPassword" component="div" className={styles.errorMessage} />
+            </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <Field type="password" id="confirmPassword" name="confirmPassword" />
-            <ErrorMessage name="confirmPassword" component="div" className={styles.error} />
-          </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="confirmPassword">{language.confirmPassword}:</label>
+              <Input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                className={
+                  errors.confirmPassword && touched.confirmPassword
+                    ? styles.inputForm_error
+                    : styles.inputForm
+                }
+              />
+              <Error name="confirmPassword" component="div" className={styles.errorMessage} />
+            </div>
 
-          <button type="submit" className={styles.submitButton}>
-            Change Password
-          </button>
-        </Form>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className={styles.btnSubmit}
+              localizedValue={language.changePassword}
+            />
+          </Form>
+        )}
       </Formik>
     </div>
   )

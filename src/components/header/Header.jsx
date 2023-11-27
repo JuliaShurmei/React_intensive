@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom'
+import {IoMdExit} from 'react-icons/io'
 import styles from './Header.module.scss'
 
 const Header = () => {
@@ -26,7 +27,7 @@ const Header = () => {
           </li>
           <li className={styles.navItem}>
             <Link to="/" className={styles.navLink}>
-              Log Out
+              <IoMdExit style={{fontSize: '24px'}} />
             </Link>
           </li>
         </ul>

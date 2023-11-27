@@ -1,4 +1,3 @@
-// EditNoteModal.js
 import {useState} from 'react'
 import styles from './EditNoteModal.module.scss'
 
