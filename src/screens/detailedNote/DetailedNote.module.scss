@@ -1,0 +1,34 @@
+.noteCard {
+  position: relative;
+  border: 1px solid #e0e0e0;
+  padding: 5px;
+  text-align: center;
+  width: 295px;
+  height: 295px;
+  color: #252424;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.noteContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.backIcon {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 35px;
+}

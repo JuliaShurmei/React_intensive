@@ -1,0 +1,195 @@
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+  }
+  .btnModal {
+    padding: 10px 20px;
+    margin: 20px 20px 5px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #2980b9;
+    }
+  }
+  
+  .btnAdd {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #2980b9;
+    }
+  }
+  
+  
+  .btnSubmit {
+    margin-top: 20px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #fff;
+    text-transform: uppercase;
+    width: 80px;
+    height: 50px;
+    border-radius: 25px;
+    background: #57b846;
+    border: none;
+  
+    &:hover {
+      background: #333;
+      cursor: pointer;
+    }
+  }
+  
+  .modal {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+  
+    label {
+      margin-bottom: 8px;
+    }
+  
+    .inputText {
+      background-color: #f2f2f2;
+      margin-bottom: 5px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+  
+    select {
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      font-size: 16px;
+      color: #333;
+    }
+  
+    option {
+      color: #333;
+      border-radius: 5px;
+      font-size: 16px;
+      background-color: #fff;
+      padding: 10px;
+      height: 440px;
+    }
+  
+    option:hover {
+      background-color: #e0e0e0;
+    }
+  
+    button {
+      padding: 10px;
+      background-color: #3498db;
+      //color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: #2980b9;
+      }
+    }
+  
+    @media (max-width: 600px) {
+      max-width: 100%;
+    }
+  }
+  
+  .cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .noteContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .noteCard {
+    position: relative;
+    border: 1px solid #e0e0e0;
+    padding: 5px;
+    text-align: center;
+    width: 295px;
+    height: 295px;
+    color: #252424;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.2s ease-in-out;
+  
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  
+  .smallButton {
+    position: absolute;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #69a9d4;
+    }
+  }
+  
+  .buttonBottomLeft {
+    bottom: 5px;
+    left: 5px;
+    padding: 8px 12px;
+    background-color: #3498db;
+    font-size: 30px;
+    color: #ffffff;
+    background-color: transparent;
+  }
+  
+  .buttonTopRight {
+    top: 5px;
+    right: 5px;
+    padding: 8px 12px;
+    font-size: 25px;
+    color: #ffffff;
+    background-color: transparent;
+  }
+  
+  .buttonBottomRight {
+    bottom: 10px;
+    right: 10px;
+    font-size: 25px;
+    padding: 8px 12px;
+    color: #ffffff;
+    background-color: transparent;
+  }
+
+  .inputColor {
+    width: 360px;
+    cursor: pointer;
+  }
+  

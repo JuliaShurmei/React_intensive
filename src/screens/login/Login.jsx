@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import {Link} from 'react-router-dom'
 import {Formik, Form} from 'formik'
 import {useLocalization} from './../../contexts/LocalizationContext'
 import {Input} from '../../components/input/Input'
@@ -49,7 +50,6 @@ export const Login = () => {
                   </span>
                   <Error name="email" component="div" className={styles.errorMessage} />
                 </div>
-
                 <div className={styles.formGroup}>
                   <Input
                     className={
@@ -70,12 +70,23 @@ export const Login = () => {
                   </span>
                   <Error name="password" component="div" className={styles.errorMessage} />
                 </div>
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  localizedValue={language.login}
-                  className={styles.btnSubmit}
-                />
+                {!errors.email && !errors.password ? (
+                  <Link to="/private-notes">
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      localizedValue={language.login}
+                      className={styles.btnSubmit}
+                    />
+                  </Link>
+                ) : (
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    localizedValue={language.login}
+                    className={styles.btnSubmit}
+                  />
+                )}
               </Form>
             )}
           </Formik>
