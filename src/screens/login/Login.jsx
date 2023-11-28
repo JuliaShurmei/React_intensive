@@ -2,10 +2,10 @@ import {useState} from 'react'
 import {Link} from 'react-router-dom'
 import {Formik, Form} from 'formik'
 import {useLocalization} from './../../contexts/LocalizationContext'
+import * as yup from 'yup'
 import {Input} from '../../components/input/Input'
 import {Error} from '../../components/error/Error'
 import {Button} from '../../components/button/Button'
-import {Schema} from '../../validators/Schema'
 import img01 from '../../../public/img-01.webp'
 import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai'
 import {FaEnvelope} from 'react-icons/fa'
@@ -18,6 +18,21 @@ export const Login = () => {
   const toggleBtn = () => {
     setType(prevType => !prevType)
   }
+  const errorMessages = {
+    email: {
+      invalid: language.errorInvalidEmail,
+      required: language.errorEmailRequired,
+    },
+    password: {
+      required: language.errorPasswordRequired,
+    },
+  }
+
+  const Schema = yup.object().shape({
+    email: yup.string().email(errorMessages.email.invalid).required(errorMessages.email.required),
+    password: yup.string().required(errorMessages.password.required),
+  })
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -25,7 +40,7 @@ export const Login = () => {
           <img src={img01} alt="image"></img>
         </div>
         <div className={styles.loginForm}>
-          <span className={styles.loginTitle}> Welcome Back</span>
+          <span className={styles.loginTitle}> {language.welcomeBack}</span>
           <Formik
             initialValues={{email: '', password: ''}}
             validationSchema={Schema}
@@ -43,7 +58,7 @@ export const Login = () => {
                     type="email"
                     id="email"
                     name="email"
-                    placeholder="Enter you email"
+                    placeholder={language.enterEmail}
                   />
                   <span className={styles.symbolInput}>
                     <FaEnvelope />
@@ -60,7 +75,7 @@ export const Login = () => {
                     type={type ? 'text' : 'password'}
                     id="password"
                     name="password"
-                    placeholder="Enter you password"
+                    placeholder={language.enterPassword}
                   />
                   <span className={styles.symbolInput}>
                     <RiLock2Line />

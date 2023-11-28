@@ -1,8 +1,10 @@
 import {Link} from 'react-router-dom'
 import {IoMdExit} from 'react-icons/io'
+import {useLocalization} from './../../contexts/LocalizationContext'
 import styles from './Header.module.scss'
 
 const Header = () => {
+  const {language} = useLocalization()
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -12,17 +14,17 @@ const Header = () => {
         <ul className={styles.navList}>
           <li className={styles.navItem}>
             <Link to="/private-notes" className={styles.navLink}>
-              Private
+              {language.private}
             </Link>
           </li>
           <li className={styles.navItem}>
             <Link to="/public-notes" className={styles.navLink}>
-              Public
+              {language.publicHeader}
             </Link>
           </li>
           <li className={styles.navItem}>
             <Link to="/change-password" className={styles.navLink}>
-              Change Password
+              {language.changePassword}
             </Link>
           </li>
           <li className={styles.navItem}>

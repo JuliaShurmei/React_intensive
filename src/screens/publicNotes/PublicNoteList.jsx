@@ -1,10 +1,12 @@
 import {useState} from 'react'
+import {useLocalization} from './../../contexts/LocalizationContext'
 import {Note} from '../../components/note/Note'
 import publicNotes from '../../data/publicNotes.json'
 import styles from './PublicNoteList.module.scss'
 import {Checkbox} from '../../components/checkbox/Checkbox'
 
 export const PublicNoteList = () => {
+  const {language} = useLocalization()
   const [favFilter, setFavFilter] = useState(false)
   const [favorites, setFavorites] = useState([])
 
@@ -26,7 +28,7 @@ export const PublicNoteList = () => {
     <>
       <Checkbox
         type="checkbox"
-        label="Show only favorites"
+        label={language.showFavorites}
         value={favFilter}
         onChange={() => setFavFilter(v => !v)}
       />
@@ -46,7 +48,7 @@ export const PublicNoteList = () => {
             />
           ))
         ) : (
-          <p>No notes added to favorites yet.</p>
+          <p>{language.noFavorites}</p>
         )}
       </div>
     </>

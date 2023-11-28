@@ -1,10 +1,10 @@
 import {useState} from 'react'
+import * as yup from 'yup'
 import {Formik, Form} from 'formik'
 import {useLocalization} from './../../contexts/LocalizationContext'
 import {Button} from '../../components/button/Button'
 import {Input} from '../../components/input/Input'
 import {Error} from '../../components/error/Error'
-import {ChangePasswordSchema} from '../../validators/ChangePasswordSchema'
 import styles from './ChangePassword.module.scss'
 
 export const ChangePassword = () => {
@@ -15,6 +15,28 @@ export const ChangePassword = () => {
     setIsSuccess(true)
   }
 
+  const errorMessages = {
+    currentPassword: {
+      required: language.errorEmailRequired,
+    },
+    newPassword: {
+      required: language.errorPasswordRequired,
+    },
+    confirmPassword: {
+      oneOf: language.newPassword,
+      required: language.errorPasswordRequired,
+      match: language.errorPasswordsMustMatch,
+    },
+  }
+
+  const ChangePasswordSchema = yup.object().shape({
+    currentPassword: yup.string().required(errorMessages.currentPassword.required),
+    newPassword: yup.string().required(errorMessages.newPassword.required),
+    confirmPassword: yup
+      .string()
+      .required(errorMessages.confirmPassword.required)
+      .oneOf([yup.ref(language.newPassword), null], errorMessages.confirmPassword.match),
+  })
   return (
     <div className={styles.formContainer}>
       <Formik
@@ -34,6 +56,7 @@ export const ChangePassword = () => {
               <Input
                 type="password"
                 id="currentPassword"
+                placeholder={language.currentPassword}
                 name="currentPassword"
                 className={
                   errors.currentPassword && touched.currentPassword
@@ -49,6 +72,7 @@ export const ChangePassword = () => {
               <Input
                 type="password"
                 id="newPassword"
+                placeholder={language.newPassword}
                 name="newPassword"
                 className={
                   errors.newPassword && touched.newPassword
@@ -64,6 +88,7 @@ export const ChangePassword = () => {
               <Input
                 type="password"
                 id="confirmPassword"
+                placeholder={language.confirmPassword}
                 name="confirmPassword"
                 className={
                   errors.confirmPassword && touched.confirmPassword
