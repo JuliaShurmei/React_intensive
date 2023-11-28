@@ -11,7 +11,6 @@ import mockNotes from '../../data/mockNotes.json'
 import styles from './NoteList.module.scss'
 import useInput from './../../hoocs/UseInput'
 import {NoteModal} from '../../components/noteModal/NoteModal'
-import {EditNoteModal} from '../../components/editNoteNodal/EditNoteModal'
 
 export const NoteList = () => {
   const {language} = useLocalization()
@@ -55,7 +54,7 @@ export const NoteList = () => {
               className={`${styles.smallButton} ${styles.buttonBottomRight}`}
               localizedValue={<FiEdit />}
               onClick={() => {
-                openModal(<EditNoteModal language={language} note={note} onClose={closeModal} />)
+                openModal(<NoteModal language={language} note={note} onClose={closeModal} />)
               }}
             />
             <Link to={`/notes/${note.id}`}>

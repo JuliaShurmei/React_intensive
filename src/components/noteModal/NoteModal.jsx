@@ -1,12 +1,22 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import styles from './NoteModal.module.scss'
 
-export const NoteModal = ({language}) => {
+export const NoteModal = ({language, note}) => {
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
   const [tags, setTags] = useState('')
   const [isPublic, setIsPublic] = useState(false)
   const [color, setColor] = useState('#B0B0B0')
+
+  useEffect(() => {
+    if (note) {
+      setTitle(note.title || '')
+      setText(note.text || '')
+      setTags(note.tags || '')
+      setIsPublic(note.isPublic || false)
+      setColor(note.color || '#B0B0B0')
+    }
+  }, [note])
 
   const handleTitleChange = event => {
     setTitle(event.target.value)
