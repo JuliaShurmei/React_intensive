@@ -1,0 +1,21 @@
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.custom-checkbox {
+  margin-right: 5px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.custom-checkbox-label {
+  color: #69a9d4;
+  user-select: none;
+}
+
+.custom-checkbox:hover {
+  background-color: #f0f0f0;
+}
