@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {useLocalization} from './../../contexts/LocalizationContext'
 import {Note} from '../../components/note/Note'
 import publicNotes from '../../data/publicNotes.json'
@@ -9,6 +9,15 @@ export const PublicNoteList = () => {
   const {language} = useLocalization()
   const [favFilter, setFavFilter] = useState(false)
   const [favorites, setFavorites] = useState([])
+
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || []
+    setFavorites(storedFavorites)
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites))
+  }, [favorites])
 
   const handleAddToFavorites = noteId => {
     setFavorites(prevFavorites => {

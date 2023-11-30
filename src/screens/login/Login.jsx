@@ -10,13 +10,14 @@ import img01 from '../../../public/img-01.webp'
 import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai'
 import {FaEnvelope} from 'react-icons/fa'
 import {RiLock2Line} from 'react-icons/ri'
+import {toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import styles from './Login.module.scss'
 
 export const Login = () => {
   const {language} = useLocalization()
   const navigate = useNavigate()
   const [type, setType] = useState(false)
-  const [error, setError] = useState(null)
 
   const toggleBtn = () => {
     setType(prevType => !prevType)
@@ -53,10 +54,10 @@ export const Login = () => {
       }
       const responseData = await response.json()
       localStorage.setItem('token', responseData.token)
-      console.log('Login successful')
+      toast.success('Login successful')
       navigate('/private-notes')
     } catch (error) {
-      setError('Invalid credentials. Please try again.')
+      toast.error('Invalid credentials. Please try again.')
     } finally {
       setSubmitting(false)
     }
@@ -113,7 +114,6 @@ export const Login = () => {
                   </span>
                   <Error name="password" component="div" className={styles.errorMessage} />
                 </div>
-                {error && <span className={styles.errorMessageNew}>{error}</span>}
                 {!errors.username && touched.username && !errors.password && touched.password ? (
                   <Button
                     type="submit"
