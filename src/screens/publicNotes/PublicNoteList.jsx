@@ -7,13 +7,14 @@ import {Checkbox} from '../../components/checkbox/Checkbox'
 
 export const PublicNoteList = () => {
   const {language} = useLocalization()
-  const [favFilter, setFavFilter] = useState(false)
-  const [favorites, setFavorites] = useState([])
-
-  useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || []
-    setFavorites(storedFavorites)
-  }, [])
+  const [favFilter, setFavFilter] = useState(() => {
+    const storedFavFilter = localStorage.getItem('favFilter')
+    return storedFavFilter ? JSON.parse(storedFavFilter) : false
+  })
+  const [favorites, setFavorites] = useState(() => {
+    const storedFavorites = localStorage.getItem('favorites')
+    return storedFavorites ? JSON.parse(storedFavorites) : []
+  })
 
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites))
@@ -29,6 +30,12 @@ export const PublicNoteList = () => {
     })
   }
 
+  const handleFavFilterChange = () => {
+    const newFavFilter = !favFilter
+    setFavFilter(newFavFilter)
+    localStorage.setItem('favFilter', JSON.stringify(newFavFilter))
+  }
+
   const filteredNotes = favFilter
     ? publicNotes.filter(note => favorites.includes(note.id))
     : publicNotes
@@ -39,7 +46,7 @@ export const PublicNoteList = () => {
         type="checkbox"
         label={language.showFavorites}
         value={favFilter}
-        onChange={() => setFavFilter(v => !v)}
+        onChange={handleFavFilterChange}
       />
       <div className={styles.cardContainer}>
         {filteredNotes.length > 0 ? (

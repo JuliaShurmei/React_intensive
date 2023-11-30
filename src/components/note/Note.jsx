@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {useLocalization} from './../../contexts/LocalizationContext'
 import {Button} from '../../components/button/Button'
 import {FaHeart} from 'react-icons/fa'
@@ -19,8 +19,15 @@ export const Note = ({
   const truncatedText = text.length > 100 ? `${text.substring(0, 50)}...` : text
   const [isFavorite, setIsFavorite] = useState(false)
 
+  useEffect(() => {
+    const storedFavorite = localStorage.getItem(`favorite_${title}`)
+    setIsFavorite(storedFavorite === 'true')
+  }, [title])
+
   const handleAddToFavorites = () => {
-    setIsFavorite(!isFavorite)
+    const newFavoriteState = !isFavorite
+    setIsFavorite(newFavoriteState)
+    localStorage.setItem(`favorite_${title}`, newFavoriteState.toString())
     onAddToFavorites()
   }
 
