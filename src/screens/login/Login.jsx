@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import {Formik, Form} from 'formik'
 import {useLocalization} from './../../contexts/LocalizationContext'
 import * as yup from 'yup'
@@ -14,14 +14,16 @@ import styles from './Login.module.scss'
 
 export const Login = () => {
   const {language} = useLocalization()
+  const navigate = useNavigate()
   const [type, setType] = useState(false)
+  const [error, setError] = useState(null)
+
   const toggleBtn = () => {
     setType(prevType => !prevType)
   }
   const errorMessages = {
-    email: {
-      invalid: language.errorInvalidEmail,
-      required: language.errorEmailRequired,
+    username: {
+      required: language.errorUsernameRequired,
     },
     password: {
       required: language.errorPasswordRequired,
@@ -29,9 +31,36 @@ export const Login = () => {
   }
 
   const Schema = yup.object().shape({
-    email: yup.string().email(errorMessages.email.invalid).required(errorMessages.email.required),
+    username: yup.string().required(errorMessages.username.required),
     password: yup.string().required(errorMessages.password.required),
   })
+
+  const handleSubmit = async (values, {setSubmitting}) => {
+    const data = {
+      username: values.username,
+      password: values.password,
+    }
+    try {
+      const response = await fetch('https://dull-pear-haddock-belt.cyclic.app/auth', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      if (!response.ok) {
+        throw new Error('Invalid credentials or server error')
+      }
+      const responseData = await response.json()
+      localStorage.setItem('token', responseData.token)
+      console.log('Login successful')
+      navigate('/private-notes')
+    } catch (error) {
+      setError('Invalid credentials. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -42,28 +71,27 @@ export const Login = () => {
         <div className={styles.loginForm}>
           <span className={styles.loginTitle}> {language.welcomeBack}</span>
           <Formik
-            initialValues={{email: '', password: ''}}
+            initialValues={{username: '', password: ''}}
             validationSchema={Schema}
-            onSubmit={values => {
-              // Handle submitting
-              console.log(values)
-            }}>
+            onSubmit={handleSubmit}>
             {({isSubmitting, errors, touched}) => (
               <Form>
                 <div className={styles.formGroup}>
                   <Input
                     className={
-                      errors.email && touched.email ? styles.inputForm_error : styles.inputForm
+                      errors.username && touched.username
+                        ? styles.inputForm_error
+                        : styles.inputForm
                     }
-                    type="email"
-                    id="email"
-                    name="email"
+                    type="username"
+                    id="username"
+                    name="username"
                     placeholder={language.enterEmail}
                   />
                   <span className={styles.symbolInput}>
                     <FaEnvelope />
                   </span>
-                  <Error name="email" component="div" className={styles.errorMessage} />
+                  <Error name="username" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
                   <Input
@@ -85,15 +113,14 @@ export const Login = () => {
                   </span>
                   <Error name="password" component="div" className={styles.errorMessage} />
                 </div>
-                {!errors.email && touched.email && !errors.password && touched.password ? (
-                  <Link to="/private-notes">
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting}
-                      localizedValue={language.login}
-                      className={styles.btnSubmit}
-                    />
-                  </Link>
+                {error && <span className={styles.errorMessageNew}>{error}</span>}
+                {!errors.username && touched.username && !errors.password && touched.password ? (
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    localizedValue={language.login}
+                    className={styles.btnSubmit}
+                  />
                 ) : (
                   <Button
                     type="submit"
