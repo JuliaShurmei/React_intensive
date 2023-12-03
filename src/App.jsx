@@ -9,6 +9,7 @@ import {en} from './localization/en'
 import {ru} from './localization/ru'
 import './App.scss'
 import Header from './components/header/Header'
+import Auth from './utils/auth/Auth'
 
 function App() {
   const {changeLanguage} = useLocalization()
@@ -26,10 +27,38 @@ function App() {
       </div>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/private-notes" element={<NoteList />} />
-        <Route path="/change-password" element={<ChangePassword />} />
-        <Route path="/public-notes" element={<PublicNoteList />} />
-        <Route path="/notes/:id" element={<DetailedNote />} />
+        <Route
+          path="/private-notes"
+          element={
+            <Auth>
+              <NoteList />
+            </Auth>
+          }
+        />
+        <Route
+          path="/change-password"
+          element={
+            <Auth>
+              <ChangePassword />
+            </Auth>
+          }
+        />
+        <Route
+          path="/public-notes"
+          element={
+            <Auth>
+              <PublicNoteList />
+            </Auth>
+          }
+        />
+        <Route
+          path="/notes/:id"
+          element={
+            <Auth>
+              <DetailedNote />
+            </Auth>
+          }
+        />
       </Routes>
     </>
   )
