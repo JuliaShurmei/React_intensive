@@ -3,6 +3,8 @@ import {useNavigate} from 'react-router-dom'
 import {Formik, Form} from 'formik'
 import {useLocalization} from './../../contexts/LocalizationContext'
 import * as yup from 'yup'
+import {useDispatch} from 'react-redux'
+import {loginUser} from '../../redux/userThunk'
 import {Input} from '../../components/input/Input'
 import {Error} from '../../components/error/Error'
 import {Button} from '../../components/button/Button'
@@ -15,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import styles from './Login.module.scss'
 
 export const Login = () => {
+  const dispatch = useDispatch()
   const {language} = useLocalization()
   const navigate = useNavigate()
   const [type, setType] = useState(false)
@@ -22,6 +25,7 @@ export const Login = () => {
   const toggleBtn = () => {
     setType(prevType => !prevType)
   }
+
   const errorMessages = {
     username: {
       required: language.errorUsernameRequired,
@@ -37,32 +41,19 @@ export const Login = () => {
   })
 
   const handleSubmit = async (values, {setSubmitting}) => {
-    const data = {
-      username: values.username,
-      password: values.password,
-    }
     try {
-      const response = await fetch('https://dull-pear-haddock-belt.cyclic.app/auth', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      if (!response.ok) {
-        throw new Error('Invalid credentials or server error')
+      const loginSuccessful = await dispatch(loginUser(values.username, values.password))
+
+      if (loginSuccessful) {
+        toast.success('Login successful')
+        navigate('/private-notes')
+      } else {
+        toast.error('Invalid credentials. Please try again.')
       }
-      const responseData = await response.json()
-      localStorage.setItem('token', responseData.token)
-      toast.success('Login successful')
-      navigate('/private-notes')
-    } catch (error) {
-      toast.error('Invalid credentials. Please try again.')
     } finally {
       setSubmitting(false)
     }
   }
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
