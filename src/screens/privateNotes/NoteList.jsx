@@ -1,4 +1,5 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import {useLocalization} from './../../contexts/LocalizationContext'
 import {Link} from 'react-router-dom'
 import {Button} from '../../components/button/Button'
@@ -8,11 +9,14 @@ import {FiAlignJustify} from 'react-icons/fi'
 import {FiEdit} from 'react-icons/fi'
 import {MdDeleteOutline} from 'react-icons/md'
 import mockNotes from '../../data/mockNotes.json'
+import {setNotes} from '../../redux/noteSlice'
 import styles from './NoteList.module.scss'
 import useInput from './../../hoocs/UseInput'
 import {NoteModal} from '../../components/noteModal/NoteModal'
 
 export const NoteList = () => {
+  const dispatch = useDispatch()
+  const notes = useSelector(state => state.notes.notes)
   const {language} = useLocalization()
   const [isModalOpen, setModalOpen] = useState(false)
   const [modalContent, setModalContent] = useState('')
@@ -31,11 +35,14 @@ export const NoteList = () => {
     setModalOpen(false)
     setModalContent('')
   }
+  useEffect(() => {
+    dispatch(setNotes(mockNotes))
+  }, [dispatch])
 
   return (
     <div className={styles.noteContainer}>
       <div className={styles.cardContainer}>
-        {mockNotes.map(note => (
+        {notes.map(note => (
           <Note
             key={note.id}
             className={styles.noteCard}

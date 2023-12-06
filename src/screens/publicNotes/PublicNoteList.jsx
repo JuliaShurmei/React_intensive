@@ -1,44 +1,31 @@
-import {useState, useEffect} from 'react'
+import {useEffect} from 'react'
 import {useLocalization} from './../../contexts/LocalizationContext'
+import {useDispatch, useSelector} from 'react-redux'
+import {toggleFavFilter, addToFavorites} from '../../redux/publicNotesSlice'
+import {setNotes} from '../../redux/publicNotesSlice'
 import {Note} from '../../components/note/Note'
 import publicNotes from '../../data/publicNotes.json'
 import styles from './PublicNoteList.module.scss'
 import {Checkbox} from '../../components/checkbox/Checkbox'
 
 export const PublicNoteList = () => {
+  const dispatch = useDispatch()
   const {language} = useLocalization()
-  const [favFilter, setFavFilter] = useState(() => {
-    const storedFavFilter = localStorage.getItem('favFilter')
-    return storedFavFilter ? JSON.parse(storedFavFilter) : false
-  })
-  const [favorites, setFavorites] = useState(() => {
-    const storedFavorites = localStorage.getItem('favorites')
-    return storedFavorites ? JSON.parse(storedFavorites) : []
-  })
-
-  useEffect(() => {
-    localStorage.setItem('favorites', JSON.stringify(favorites))
-  }, [favorites])
+  const {favFilter, favorites, notes} = useSelector(state => state.publicNotes)
 
   const handleAddToFavorites = noteId => {
-    setFavorites(prevFavorites => {
-      if (prevFavorites.includes(noteId)) {
-        return prevFavorites.filter(id => id !== noteId)
-      } else {
-        return [...prevFavorites, noteId]
-      }
-    })
+    dispatch(addToFavorites(noteId))
   }
 
   const handleFavFilterChange = () => {
-    const newFavFilter = !favFilter
-    setFavFilter(newFavFilter)
-    localStorage.setItem('favFilter', JSON.stringify(newFavFilter))
+    dispatch(toggleFavFilter())
   }
 
-  const filteredNotes = favFilter
-    ? publicNotes.filter(note => favorites.includes(note.id))
-    : publicNotes
+  useEffect(() => {
+    dispatch(setNotes(publicNotes))
+  }, [dispatch])
+
+  const filteredNotes = favFilter ? notes.filter(note => favorites[note.id]) : notes
 
   return (
     <>
