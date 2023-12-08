@@ -1,28 +1,30 @@
-import {useEffect} from 'react'
+import {useEffect, useCallback} from 'react'
 import {useLocalization} from './../../contexts/LocalizationContext'
 import {useDispatch, useSelector} from 'react-redux'
-import {toggleFavFilter, addToFavorites} from '../../redux/publicNotesSlice'
-import {setNotes} from '../../redux/publicNotesSlice'
-import {Note} from '../../components/note/Note'
-import publicNotes from '../../data/publicNotes.json'
+import {toggleFavFilter, addToFavorites} from '../../redux/slices/publicNotesSlice'
+import {getPublicNotes} from '../../redux/middleware/publicNotesThunk'
 import styles from './PublicNoteList.module.scss'
 import {Checkbox} from '../../components/checkbox/Checkbox'
+import {Note} from '../../components/note/Note'
 
 export const PublicNoteList = () => {
   const dispatch = useDispatch()
   const {language} = useLocalization()
   const {favFilter, favorites, notes} = useSelector(state => state.publicNotes)
 
-  const handleAddToFavorites = noteId => {
-    dispatch(addToFavorites(noteId))
-  }
+  const handleAddToFavorites = useCallback(
+    noteId => {
+      dispatch(addToFavorites(noteId))
+    },
+    [dispatch]
+  )
 
-  const handleFavFilterChange = () => {
+  const handleFavFilterChange = useCallback(() => {
     dispatch(toggleFavFilter())
-  }
+  }, [dispatch])
 
   useEffect(() => {
-    dispatch(setNotes(publicNotes))
+    dispatch(getPublicNotes())
   }, [dispatch])
 
   const filteredNotes = favFilter ? notes.filter(note => favorites[note.id]) : notes

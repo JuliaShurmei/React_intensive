@@ -1,12 +1,14 @@
 import {configureStore} from '@reduxjs/toolkit'
-import noteReducer from './noteSlice'
-import publicNotesReducer from './publicNotesSlice'
-import userReducer from './userSlice'
+import personalNotesReducer from './slices/noteSlice'
+import publicNotesReducer from './slices/publicNotesSlice'
+import userReducer from './slices/userSlice'
+import changePasswordReducer from './slices/changePasswordSlice'
 
 export const store = configureStore({
   reducer: {
-    notes: noteReducer,
+    notes: personalNotesReducer,
     publicNotes: publicNotesReducer,
     user: userReducer,
+    password: changePasswordReducer,
   },
 })

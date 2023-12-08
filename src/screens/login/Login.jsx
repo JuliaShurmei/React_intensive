@@ -1,10 +1,10 @@
-import {useState} from 'react'
+import {useState, useMemo} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {Formik, Form} from 'formik'
 import {useLocalization} from './../../contexts/LocalizationContext'
 import * as yup from 'yup'
 import {useDispatch} from 'react-redux'
-import {loginUser} from '../../redux/userThunk'
+import {loginUser} from '../../redux/middleware/userThunk'
 import {Input} from '../../components/input/Input'
 import {Error} from '../../components/error/Error'
 import {Button} from '../../components/button/Button'
@@ -35,10 +35,12 @@ export const Login = () => {
     },
   }
 
-  const Schema = yup.object().shape({
-    username: yup.string().required(errorMessages.username.required),
-    password: yup.string().required(errorMessages.password.required),
-  })
+  const Schema = useMemo(() => {
+    return yup.object().shape({
+      username: yup.string().required(errorMessages.username.required),
+      password: yup.string().required(errorMessages.password.required),
+    })
+  }, [errorMessages.username.required, errorMessages.password.required])
 
   const handleSubmit = async (values, {setSubmitting}) => {
     try {

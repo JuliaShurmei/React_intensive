@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
+import {getPublicNotes} from '../middleware/publicNotesThunk'
 
 export const publicNotesSlice = createSlice({
   name: 'publicNotes',
@@ -8,9 +9,6 @@ export const publicNotesSlice = createSlice({
     notes: [],
   },
   reducers: {
-    setNotes: (state, action) => {
-      state.notes = action.payload
-    },
     toggleFavFilter: state => {
       state.favFilter = !state.favFilter
     },
@@ -19,8 +17,13 @@ export const publicNotesSlice = createSlice({
       state.favorites[noteId] = !state.favorites[noteId]
     },
   },
+  extraReducers: builder => {
+    builder.addCase(getPublicNotes.fulfilled, (state, action) => {
+      state.notes = action.payload
+    })
+  },
 })
 
-export const {toggleFavFilter, addToFavorites, setNotes} = publicNotesSlice.actions
+export const {toggleFavFilter, addToFavorites} = publicNotesSlice.actions
 
 export default publicNotesSlice.reducer
