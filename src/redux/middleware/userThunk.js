@@ -1,4 +1,4 @@
-import {loginSuccess} from './userSlice'
+import {loginSuccess} from '../slices/userSlice'
 export const loginUser = (username, password) => async dispatch => {
   const data = {
     username,
@@ -24,7 +24,6 @@ export const loginUser = (username, password) => async dispatch => {
 
     return true
   } catch (error) {
-    console.error(error)
     return false
   }
 }

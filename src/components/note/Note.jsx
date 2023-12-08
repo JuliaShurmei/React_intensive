@@ -1,5 +1,5 @@
 import {useSelector, useDispatch} from 'react-redux'
-import {addToFavorites} from '../../redux/publicNotesSlice'
+import {addToFavorites} from '../../redux/slices/publicNotesSlice'
 import {useLocalization} from './../../contexts/LocalizationContext'
 import {Button} from '../../components/button/Button'
 import {FaHeart} from 'react-icons/fa'

@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useMemo} from 'react'
 import * as yup from 'yup'
 import {Formik, Form} from 'formik'
 import {useLocalization} from './../../contexts/LocalizationContext'
@@ -6,67 +6,52 @@ import {Button} from '../../components/button/Button'
 import {Input} from '../../components/input/Input'
 import {Error} from '../../components/error/Error'
 import styles from './ChangePassword.module.scss'
+import {useDispatch, useSelector} from 'react-redux'
+import {changePassword} from '../../redux/middleware/changePasswordThunk'
+import {toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const ChangePassword = () => {
   const {language} = useLocalization()
-  const [isSuccess, setIsSuccess] = useState(false)
+  const dispatch = useDispatch()
+  const isSuccess = useSelector(state => state.auth?.isSuccess)
 
-  const handleSubmit = () => {
-    setIsSuccess(true)
+  const ChangePasswordSchema = useMemo(() => {
+    const errorMessages = {
+      newPassword: {
+        required: language.errorPasswordRequired,
+      },
+    }
+
+    return yup.object().shape({
+      newPassword: yup
+        .string()
+        .required(errorMessages.newPassword.required)
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/),
+    })
+  }, [language])
+
+  const handleSubmit = async values => {
+    try {
+      await dispatch(changePassword(values.newPassword))
+      toast.success('Changed successful')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  const errorMessages = {
-    currentPassword: {
-      required: language.errorEmailRequired,
-    },
-    newPassword: {
-      required: language.errorPasswordRequired,
-    },
-    confirmPassword: {
-      oneOf: language.newPassword,
-      required: language.errorPasswordRequired,
-      match: language.errorPasswordsMustMatch,
-    },
-  }
-
-  const ChangePasswordSchema = yup.object().shape({
-    currentPassword: yup.string().required(errorMessages.currentPassword.required),
-    newPassword: yup.string().required(errorMessages.newPassword.required),
-    confirmPassword: yup
-      .string()
-      .required(errorMessages.confirmPassword.required)
-      .oneOf([yup.ref(language.newPassword), null], errorMessages.confirmPassword.match),
-  })
   return (
     <div className={styles.formContainer}>
       <Formik
         initialValues={{
           currentPassword: '',
           newPassword: '',
-          confirmPassword: '',
         }}
         validationSchema={ChangePasswordSchema}
         onSubmit={handleSubmit}>
         {({isSubmitting, errors, touched}) => (
           <Form>
             {isSuccess && <div className={styles.successMessage}>{language.successMessage}</div>}
-
-            <div className={styles.formGroup}>
-              <label htmlFor="currentPassword">{language.currentPassword}:</label>
-              <Input
-                type="password"
-                id="currentPassword"
-                placeholder={language.currentPassword}
-                name="currentPassword"
-                className={
-                  errors.currentPassword && touched.currentPassword
-                    ? styles.inputForm_error
-                    : styles.inputForm
-                }
-              />
-              <Error name="currentPassword" component="div" className={styles.errorMessage} />
-            </div>
-
             <div className={styles.formGroup}>
               <label htmlFor="newPassword">{language.newPassword}:</label>
               <Input
@@ -81,22 +66,6 @@ export const ChangePassword = () => {
                 }
               />
               <Error name="newPassword" component="div" className={styles.errorMessage} />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label htmlFor="confirmPassword">{language.confirmPassword}:</label>
-              <Input
-                type="password"
-                id="confirmPassword"
-                placeholder={language.confirmPassword}
-                name="confirmPassword"
-                className={
-                  errors.confirmPassword && touched.confirmPassword
-                    ? styles.inputForm_error
-                    : styles.inputForm
-                }
-              />
-              <Error name="confirmPassword" component="div" className={styles.errorMessage} />
             </div>
 
             <Button
