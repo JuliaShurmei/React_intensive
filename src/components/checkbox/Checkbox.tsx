@@ -1,6 +1,16 @@
+import React from 'react'
 import styles from './Checkbox.module.scss'
+import { ChangeEvent } from "react";
 
-export const Checkbox = ({type, label, className, value, onChange}) => {
+interface CheckboxProps {
+    type: string;
+    label: string;
+    className?: string;
+    value: boolean;
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  }
+
+export const Checkbox: React.FC<CheckboxProps> = ({type, label, className, value, onChange}) => {
   return (
     <div className={`${styles['checkbox-container']} ${className}`}>
       <input

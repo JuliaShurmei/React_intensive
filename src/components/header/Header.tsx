@@ -1,15 +1,22 @@
-import {Link, useNavigate} from 'react-router-dom'
+import React, {MouseEvent} from 'react'
+import {Link} from 'react-router-dom'
 import {IoMdExit} from 'react-icons/io'
-import {useLocalization} from './../../contexts/LocalizationContext'
+import {useNavigate} from 'react-router-dom'
+import {useLocalization} from '../../contexts/LocalizationContext'
 import styles from './Header.module.scss'
 
-const Header = () => {
+const Header: React.FC = () => {
   const {language} = useLocalization()
   const navigate = useNavigate()
 
   const handleLogout = () => {
     localStorage.removeItem('token')
     navigate('/')
+  }
+
+  const handleLogoutClick = (event: MouseEvent) => {
+    event.preventDefault()
+    handleLogout()
   }
 
   return (
@@ -35,7 +42,7 @@ const Header = () => {
             </Link>
           </li>
           <li className={styles.navItem}>
-            <div className={styles.navLink} onClick={handleLogout}>
+            <div className={styles.navLink} onClick={handleLogoutClick}>
               <IoMdExit style={{fontSize: '24px'}} />
             </div>
           </li>

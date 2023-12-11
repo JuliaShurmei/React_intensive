@@ -1,11 +1,24 @@
+import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {addToFavorites} from '../../redux/slices/publicNotesSlice'
-import {useLocalization} from './../../contexts/LocalizationContext'
-import {Button} from '../../components/button/Button'
+import {useLocalization} from '../../contexts/LocalizationContext'
+import {Button} from '../button/Button'
 import {FaHeart} from 'react-icons/fa'
 import styles from './Note.module.scss'
 
-export const Note = ({
+interface NoteProps {
+  color: string
+  title: string
+  text: string
+  tags: string[]
+  isPublic: boolean
+  owner: string
+  children?: React.ReactNode
+  className?: string
+  onAddToFavorites: () => void
+}
+
+export const Note: React.FC<NoteProps> = ({
   color,
   title,
   text,
@@ -20,7 +33,10 @@ export const Note = ({
   const truncatedText = text.length > 100 ? `${text.substring(0, 50)}...` : text
 
   const dispatch = useDispatch()
-  const isFavorite = useSelector(state => state.publicNotes.favorites[title])
+  const isFavorite = useSelector(
+    (state: {publicNotes: {favorites: Record<string, boolean>}}) =>
+      state.publicNotes.favorites[title]
+  )
 
   const handleAddToFavorites = () => {
     dispatch(addToFavorites(title))
